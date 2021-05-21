@@ -18,15 +18,6 @@ export default function EventPage() {
   });
 
   return (
-    // <div>
-    //   <div>
-    //     <img src={'/' + event.image} alt="" />
-    //   </div>
-    //   <div>{<h1>{event.title}</h1>}</div>
-    //   <div>{<h5>{humanReadableDate}</h5>}</div>
-    //   <div>{<h5>{event.location}</h5>}</div>
-    //   <div>{<p>{event.description}</p>}</div>
-    // </div>
     <>
       <EventSummary title={event.title} />
       <EventLogistics
