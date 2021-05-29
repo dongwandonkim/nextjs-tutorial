@@ -5,9 +5,9 @@ import path from 'path';
 
 export default function ProductDetailPage(props) {
   const { loadedProduct } = props;
-  // if (!loadedProduct) {
-  //   return <p>loading...</p>;
-  // }
+  if (!loadedProduct) {
+    return <p>loading...</p>;
+  }
   return (
     <>
       <h1>{loadedProduct.title}</h1>
@@ -30,6 +30,9 @@ export async function getStaticProps(context) {
   const data = await getData();
 
   const product = data.products.find((product) => product.id === productId);
+  if (!product) {
+    return { notFound: true };
+  }
   return {
     props: {
       loadedProduct: product,
@@ -38,13 +41,15 @@ export async function getStaticProps(context) {
 }
 
 export async function getStaticPaths() {
+  const data = await getData();
+  const ids = data.products.map((product) => product.id);
+  const pathsWithParams = ids.map((id) => ({ params: { pid: id } }));
   return {
-    paths: [
-      { params: { pid: 'p1' } },
-      // { params: { pid: 'p2' } },
-      // { params: { pid: 'p3' } },
-    ],
-    // fallback: true,
-    fallback: 'blocking',
+    paths: pathsWithParams,
+    // { params: { pid: 'p2' } },
+    // { params: { pid: 'p3' } },
+    // fallback: false,
+    fallback: true,
+    // fallback: 'blocking',
   };
 }
